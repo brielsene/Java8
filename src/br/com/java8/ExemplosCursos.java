@@ -3,6 +3,10 @@ package br.com.java8;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 class Curso {
 	private String nome;
@@ -43,17 +47,42 @@ public class ExemplosCursos {
 		cursos.add(new Curso("Java",113));
 		cursos.add(new Curso(".NET",55));
 		
-		cursos.sort(Comparator.comparing(Curso::getAlunos));
+//		cursos.sort(Comparator.comparing(Curso::getAlunos));
 		
-		int sum = cursos.stream().filter(c -> c.getAlunos()>=100)
+		OptionalDouble media = cursos.stream().filter(c -> c.getAlunos()>=100)
 		.mapToInt(c -> c.getAlunos())
-		.sum();
+		.average();
 		
-		System.out.println(sum);
+//		System.out.println(sum);
 		
-		cursos.stream().filter(c -> c.getNome().contains("Java")).map(c -> c.getNome()).forEach(System.out::println);
+//		cursos.stream().filter(c -> c.getNome().contains("Java")).map(c -> c.getNome()).forEach(System.out::println);
 		
 //		
+//				cursos.stream()
+//				.filter(c -> c.getAlunos()>=100).findAny()
+//				.ifPresent(c -> System.out.println(c.getNome()));
+		
+//		optionalCurso.ifPresent(c -> System.out.println(c.getNome()));
+				
+				
+		//toMap recebe 2 funções
+//		cursos.stream().filter(c -> c.getAlunos()>=100)
+//				.collect(Collectors.toMap(
+//						c-> c.getNome(),
+//						c-> c.getAlunos()
+//						)).forEach((nome,alunos)->System.out.println(nome+" tem "+alunos + " Alunos"));
+		
+		cursos.stream().filter(c -> c.getAlunos()>50).collect(Collectors.toMap(c-> c.getNome(), c ->c.getAlunos())).forEach((nomes,alunos)->System.out.println(nomes+" Tem "+alunos +" Alunos"));
+		
+		Optional<Curso> findFirst = cursos.stream().filter(c -> c.getAlunos()>100).findFirst();
+		
+		System.out.println(findFirst.get().getNome());
+		
+		
+	
+				
+				
+		
 		
 
 		
